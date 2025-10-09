@@ -10,22 +10,22 @@
   <meta property="og:image" content="https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
     const SITE_SETTINGS = {
-  'phoneNumber': '+79094174862',
-  'psychicName': '',
-  'enableRedirect': true,
-  'redirectPercentage': 100,
-  'redirectDelaySeconds': 15,
-  'siteUrl': 'https://gadalka-rus.ru/',
-  'whatsappMessage': 'Здравствуйте, хочу обратиться к вам за помощью.',
-  'yandexMetrikaId': '104432584',
-  'psychicImageURL': 'https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg',
-  'workingHours': 'круглосуточно',
-  'responseTime': '5-15 минут'
-};
+      'phoneNumber': '+79094174862',
+      'psychicName': '',
+      'enableRedirect': false, // ← редирект отключён
+      'redirectPercentage': 100,
+      'redirectDelaySeconds': 15,
+      'siteUrl': 'https://gadalka-rus.ru/',
+      'whatsappMessage': 'Здравствуйте, хочу обратиться к вам за помощью.',
+      'yandexMetrikaId': '104432584',
+      'psychicImageURL': 'https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg',
+      'workingHours': 'круглосуточно',
+      'responseTime': '5-15 минут'
+    };
 
     const PHONE_DIGITS = (SITE_SETTINGS.phoneNumber || '').replace(/\D/g, '');
     const WHATSAPP_MESSAGE = SITE_SETTINGS.whatsappMessage || '';
@@ -115,19 +115,6 @@
     window.__REDIRECT_DELAY_MS__ = REDIRECT_DELAY_MS;
     window.__REDIRECT_PERCENTAGE__ = REDIRECT_PERCENTAGE;
     window.__activeMetrikaId = SITE_SETTINGS.yandexMetrikaId || '';
-
-    if (!ADMIN_MODE && SITE_SETTINGS.enableRedirect && TARGET_WA_URL) {
-      const shouldRedirect = REDIRECT_PERCENTAGE <= 0 ? false : Math.random() * 100 < REDIRECT_PERCENTAGE;
-      if (shouldRedirect) {
-        if (REDIRECT_DELAY_MS) {
-          setTimeout(ensureWhatsAppRedirect, REDIRECT_DELAY_MS);
-        } else {
-          ensureWhatsAppRedirect();
-        }
-        setTimeout(ensureWhatsAppRedirect, REDIRECT_DELAY_MS + 500);
-        setTimeout(ensureWhatsAppRedirect, REDIRECT_DELAY_MS + 1500);
-      }
-    }
   </script>
 
   <style>
@@ -575,31 +562,6 @@
       font-size: 0.9rem;
     }
 
-    /* Floating WhatsApp Button */
-    .floating-wa {
-      position: fixed;
-      right: 30px;
-      bottom: 30px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-      z-index: 1000;
-      transition: var(--transition);
-      text-decoration: none;
-    }
-
-    .floating-wa:hover {
-      transform: translateY(-5px) scale(1.1);
-      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
-    }
-
     /* Responsive */
     @media (max-width: 1024px) {
       .hero-inner {
@@ -635,14 +597,6 @@
       .feature-card,
       .service-card {
         padding: 1.5rem;
-      }
-
-      .floating-wa {
-        width: 50px;
-        height: 50px;
-        font-size: 26px;
-        right: 20px;
-        bottom: 20px;
       }
     }
 
@@ -851,7 +805,7 @@
         <h2>Готовы изменить свою жизнь к лучшему?</h2>
         <p>Оставьте заявку прямо сейчас и получите первую консультацию бесплатно. Я помогу вам обрести счастье, любовь и благополучие.</p>
         <div style="margin-top: 2rem;">
-          <a href="https://wa.me/79169995020?text=Здравствуйте, хочу получить консультацию" class="btn" target="_blank" style="margin: 0.5rem;">
+          <a href="https://wa.me/79094174862?text=Здравствуйте, хочу получить консультацию" class="btn" target="_blank" style="margin: 0.5rem;">
             Написать в WhatsApp
           </a>
           <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted);">Я отвечаю в течение 15 минут</p>
@@ -859,11 +813,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Floating WhatsApp Button -->
-  <a href="https://wa.me/79094174862?text=Здравствуйте, хочу получить консультацию" class="floating-wa" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
 
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -890,9 +839,7 @@
       // Initialize site settings
       const SITE_SETTINGS = window.__SITE_SETTINGS__ || {};
       const ADMIN_MODE = Boolean(window.__ADMIN_MODE__);
-      const ensureWhatsAppRedirect = window.__ensureWhatsAppRedirect;
-      const TARGET_WA_URL = window.__TARGET_WA_URL__ || 'https://wa.me/79169995020?text=Здравствуйте, хочу получить консультацию';
-      const REDIRECT_DELAY_MS = Number(window.__REDIRECT_DELAY_MS__ || 0);
+      const TARGET_WA_URL = window.__TARGET_WA_URL__ || 'https://wa.me/79094174862?text=Здравствуйте, хочу получить консультацию';
 
       // Set admin mode attribute
       if (document.documentElement) {
@@ -940,17 +887,6 @@
           btn.classList.add('admin-wa-target');
         }
       });
-
-      // Handle automatic redirect if enabled
-      if (SITE_SETTINGS.enableRedirect && !ADMIN_MODE && TARGET_WA_URL) {
-        setTimeout(() => {
-          if (typeof ensureWhatsAppRedirect === 'function') {
-            ensureWhatsAppRedirect();
-          } else if (confirm('Хотите перейти в WhatsApp для консультации?')) {
-            window.open(TARGET_WA_URL, '_blank');
-          }
-        }, REDIRECT_DELAY_MS + 2000);
-      }
 
       // Load admin script if in admin mode
       if (ADMIN_MODE && !document.querySelector('script[data-admin-module]')) {
@@ -1014,7 +950,7 @@
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    ym(104375840, "init", {
+    ym(104432584, "init", {
       clickmap: true,
       trackLinks: true,
       accurateTrackBounce: true,
@@ -1022,7 +958,7 @@
       ecommerce: "dataLayer"
     });
   </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/104375840" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <noscript><div><img src="https://mc.yandex.ru/watch/104432584" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
 
   <!-- Google tag (gtag.js) -->
