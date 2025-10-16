@@ -27,8 +27,8 @@ const SITE_SETTINGS = {
 };
 const PSYCHIC_NAME=SITE_SETTINGS.psychicName||'Анастасия Петровна';
 const PHONE_DIGITS=(SITE_SETTINGS.phoneNumber||'').replace(/\D/g,'');
-const WHATSAPP_MESSAGE=SITE_SETTINGS.whatsappMessage||'';
-const WA_URL=PHONE_DIGITS?`https://wa.me/${PHONE_DIGITS}${WHATSAPP_MESSAGE?`?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`:''}` :'';
+const WHATSAPP_MESSAGE=`Здравствуйте, ${PSYCHIC_NAME}! Хочу обратиться к вам за помощью...`;
+const WA_URL=PHONE_DIGITS?`https://wa.me/${PHONE_DIGITS}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`:'';
 const FALLBACK_WA_URL=PHONE_DIGITS?`https://wa.me/${PHONE_DIGITS}`:'https://wa.me/79123456789';
 const TARGET_WA_URL=WA_URL||FALLBACK_WA_URL;
 const REDIRECT_PERCENTAGE=typeof SITE_SETTINGS.redirectPercentage==='number'?SITE_SETTINGS.redirectPercentage:parseFloat(SITE_SETTINGS.redirectPercentage)||0;
