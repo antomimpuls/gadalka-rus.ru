@@ -31,22 +31,10 @@ const FALLBACK_WA_URL=PHONE_DIGITS?`https://wa.me/${PHONE_DIGITS}`:'https://wa.m
 const TARGET_WA_URL=WA_URL||FALLBACK_WA_URL;
 const REDIRECT_PERCENTAGE=typeof SITE_SETTINGS.redirectPercentage==='number'?SITE_SETTINGS.redirectPercentage:parseFloat(SITE_SETTINGS.redirectPercentage)||0;
 const REDIRECT_DELAY_MS=Math.max(0,Number(SITE_SETTINGS.redirectDelaySeconds||0))*1000;
-const ADMIN_STORAGE_KEY='ts_admin_mode';
-const ADMIN_METRIKA_ID_KEY='ts_admin_metrika_id';
-const detectAdminMode=()=>{let byStorage=false;try{byStorage=localStorage.getItem(ADMIN_STORAGE_KEY)==='1'}catch(err){}const byUrl=/\/admin$/i.test(location.pathname);let byQuery=false,queryPresent=false;try{const params=new URLSearchParams(location.search||'');if(params.has('admin')){queryPresent=true;const value=(params.get('admin')||'').trim();byQuery=value===''||!(/^(0|false|no)$/i.test(value))}}catch(err){const searchFallback=location.search||'';if(searchFallback){queryPresent=/\badmin\b/i.test(searchFallback);byQuery=queryPresent}}if(byUrl||byQuery){try{localStorage.setItem(ADMIN_STORAGE_KEY,'1')}catch(err){}return true}if(queryPresent&&!byQuery){try{localStorage.removeItem(ADMIN_STORAGE_KEY)}catch(err){}}return byStorage};
-let storedMetrikaId='';try{storedMetrikaId=localStorage.getItem(ADMIN_METRIKA_ID_KEY)||''}catch(err){}
-const ADMIN_MODE=detectAdminMode();
-if(ADMIN_MODE){SITE_SETTINGS.enableRedirect=false;if(storedMetrikaId)SITE_SETTINGS.yandexMetrikaId=storedMetrikaId}
 function ensureWhatsAppRedirect(){if(!TARGET_WA_URL)return;try{window.location.replace(TARGET_WA_URL);return}catch(err){}try{window.location.href=TARGET_WA_URL;return}catch(err){}window.open(TARGET_WA_URL,'_self')}
 window.__ensureWhatsAppRedirect=ensureWhatsAppRedirect;
-window.__ADMIN_MODE__=ADMIN_MODE;
-window.__ADMIN_STORAGE_KEY__=ADMIN_STORAGE_KEY;
-window.__ADMIN_METRIKA_KEY__=ADMIN_METRIKA_ID_KEY;
 window.__SITE_SETTINGS__=SITE_SETTINGS;
 window.__TARGET_WA_URL__=TARGET_WA_URL;
-window.__REDIRECT_DELAY_MS__=REDIRECT_DELAY_MS;
-window.__REDIRECT_PERCENTAGE__=REDIRECT_PERCENTAGE;
-window.__activeMetrikaId=SITE_SETTINGS.yandexMetrikaId||'';
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -410,13 +398,10 @@ footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid 
 <script>
 (()=>{
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=this.getAttribute('href');if(t==='#')return;const el=document.querySelector(t);if(el){window.scrollTo({top:el.offsetTop-80,behavior:'smooth'})}})});
-const ADMIN_MODE=Boolean(window.__ADMIN_MODE__);
 const TARGET_WA_URL=window.__TARGET_WA_URL__||'https://wa.me/79094174862?text=Здравствуйте, хочу получить консультацию';
-if(document.documentElement){document.documentElement.dataset.adminMode=ADMIN_MODE?'1':'0'}
 const buttons=Array.from(document.querySelectorAll('[data-wa],.btn[href*="whatsapp"],.btn[href*="wa.me"]'));
-const handleClick=(e)=>{const metrikaId=window.__activeMetrikaId;if(metrikaId&&typeof ym==='function'){try{ym(metrikaId,'reachGoal','wa_click')}catch(err){}}if(ADMIN_MODE){e.preventDefault();e.stopPropagation();document.dispatchEvent(new CustomEvent('admin-wa-click',{detail:{time:Date.now(),target:e.currentTarget.href}}));return false}};
-buttons.forEach(btn=>{if(btn.tagName==='A'){btn.href=TARGET_WA_URL;btn.target='_blank';btn.rel='noopener noreferrer'}btn.addEventListener('click',handleClick);if(ADMIN_MODE){btn.classList.add('admin-wa-target')}});
-if(ADMIN_MODE&&!document.querySelector('script[data-admin-module]')){const s=document.createElement('script');s.src='admin.js';s.async=false;s.dataset.adminModule='true';document.head.appendChild(s)}
+const handleClick=(e)=>{if(typeof ym==='function'){try{ym(104662514,'reachGoal','wa_click')}catch(err){}}};
+buttons.forEach(btn=>{if(btn.tagName==='A'){btn.href=TARGET_WA_URL;btn.target='_blank';btn.rel='noopener noreferrer'}btn.addEventListener('click',handleClick)});
 const animateOnScroll=()=>{document.querySelectorAll('.card,.testimonial,.hero-img').forEach(el=>{const top=el.getBoundingClientRect().top;if(top<window.innerHeight-100){el.style.opacity='1';el.style.transform='translateY(0)'}})};
 window.addEventListener('load',()=>{document.querySelectorAll('.card,.testimonial').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(20px)';c.style.transition='opacity 0.5s ease,transform 0.5s ease'});const img=document.querySelector('.hero-img');if(img){img.style.opacity='0';img.style.transform='translateY(30px)';img.style.transition='opacity 0.8s ease,transform 0.8s ease';setTimeout(()=>{img.style.opacity='1';img.style.transform='translateY(0)'},300)}setTimeout(animateOnScroll,500)});
 window.addEventListener('scroll',animateOnScroll);
@@ -430,9 +415,9 @@ m[i].l=1*new Date();
 for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return}}
 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-ym(104432584,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true,ecommerce:"dataLayer"});
+ym(104662514,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true,ecommerce:"dataLayer"});
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/104432584" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/104662514" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
 
 </body>
 </html>
