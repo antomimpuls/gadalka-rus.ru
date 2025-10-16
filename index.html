@@ -10,19 +10,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script>
-const SITE_SETTINGS = {
-  'phoneNumber': '+79094174862',
-  'psychicName': 'Анастасия Петровна',
-  'enableRedirect': false,
-  'redirectPercentage': 100,
-  'redirectDelaySeconds': 15,
-  'siteUrl': 'https://gadalka-rus.ru/',
-  'whatsappMessage': 'Здравствуйте, хочу обратиться к вам за помощью.',
-  'yandexMetrikaId': '104662514',
-  'psychicImageURL': 'https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg',
-  'workingHours': 'круглосуточно',
-  'responseTime': '5-15 минут'
-};
+const SITE_SETTINGS={'phoneNumber':'+79094174862','psychicName':'Анастасия Петровна','enableRedirect':false,'redirectPercentage':100,'redirectDelaySeconds':15,'siteUrl':'https://gadalka-rus.ru/','whatsappMessage':'Здравствуйте, хочу обратиться к вам за помощью.','yandexMetrikaId':'104432584','psychicImageURL':'https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg','workingHours':'круглосуточно','responseTime':'5-15 минут'};
 const PSYCHIC_NAME=SITE_SETTINGS.psychicName||'Анастасия Петровна';
 const PHONE_DIGITS=(SITE_SETTINGS.phoneNumber||'').replace(/\D/g,'');
 const WHATSAPP_MESSAGE=SITE_SETTINGS.whatsappMessage||'';
@@ -63,7 +51,7 @@ p{font-size:clamp(1rem,2vw,1.1rem);color:#a8a8b8;margin-bottom:15px;line-height:
 .sticky-wa{position:fixed;bottom:20px;right:20px;z-index:999;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 .hero{padding:80px 0;background:linear-gradient(180deg,#0a0a0f,#151520);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:150%;background:radial-gradient(circle,rgba(217,70,239,0.15),transparent 60%)}
+.hero::before{content:'';position:absolute;top:-50%;left:-20%;right:-20%;height:150%;background:radial-gradient(circle,rgba(217,70,239,0.15),transparent 60%)}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:1}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(217,70,239,0.15);border:1px solid rgba(217,70,239,0.3);color:#f0abfc;border-radius:50px;font-size:0.85rem;font-weight:600;margin-bottom:20px;text-transform:uppercase}
 .trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:30px 0}
@@ -100,7 +88,7 @@ p{font-size:clamp(1rem,2vw,1.1rem);color:#a8a8b8;margin-bottom:15px;line-height:
 .urgency strong{color:#fbbf24}
 footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid rgba(255,255,255,0.05)}
 @media(max-width:1024px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-img{max-width:500px;margin:0 auto}}
-@media(max-width:768px){.trust-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr;gap:15px}.cards{grid-template-columns:1fr}.btn{padding:15px 28px;font-size:0.95rem}.sticky-wa{bottom:15px;right:15px}.psychic-name{margin-top:15px;padding:12px 15px}.psychic-name-title{font-size:1.3rem}.psychic-name-subtitle{font-size:0.85rem}}
+@media(max-width:768px){.trust-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr;gap:15px}.cards{grid-template-columns:1fr}.btn{padding:15px 28px;font-size:0.95rem}.sticky-wa{bottom:15px;right:15px}.hero{padding:60px 0 80px}.hero-grid>div:first-child{order:2;margin-top:25px}.hero-grid>div:last-child{order:1}.hero-img{margin:0 auto 16px}.psychic-name{margin-top:10px;padding:12px 15px}.psychic-name-title{font-size:1.3rem}.psychic-name-subtitle{font-size:0.85rem}}
 @media(max-width:480px){.container{padding:0 15px}.btn{padding:14px 25px}.card{padding:25px 20px}}
 .slider{position:relative;overflow:hidden;max-width:900px;margin:0 auto}
 .slider-wrapper{display:flex;transition:transform 0.5s ease}
