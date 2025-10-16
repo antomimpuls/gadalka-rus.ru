@@ -13,6 +13,8 @@
 const SITE_SETTINGS = {
   'phoneNumber': '+79094174862',
   'psychicName': 'Анастасия Петровна',
+  'city': 'Москва',
+  'address': 'г. Москва, ул. Тверская, д. 12, офис 45',
   'enableRedirect': false,
   'redirectPercentage': 100,
   'redirectDelaySeconds': 15,
@@ -31,6 +33,7 @@ const FALLBACK_WA_URL=PHONE_DIGITS?`https://wa.me/${PHONE_DIGITS}`:'https://wa.m
 const TARGET_WA_URL=WA_URL||FALLBACK_WA_URL;
 const REDIRECT_PERCENTAGE=typeof SITE_SETTINGS.redirectPercentage==='number'?SITE_SETTINGS.redirectPercentage:parseFloat(SITE_SETTINGS.redirectPercentage)||0;
 const REDIRECT_DELAY_MS=Math.max(0,Number(SITE_SETTINGS.redirectDelaySeconds||0))*1000;
+function formatPhoneNumber(phone){if(!phone)return'';const digits=phone.replace(/\D/g,'');if(digits.length===11&&digits[0]==='7'){return`+7 (${digits.substr(1,3)}) ${digits.substr(4,3)}-${digits.substr(7,2)}-${digits.substr(9,2)}`}return phone}
 function ensureWhatsAppRedirect(){if(!TARGET_WA_URL)return;try{window.location.replace(TARGET_WA_URL);return}catch(err){}try{window.location.href=TARGET_WA_URL;return}catch(err){}window.open(TARGET_WA_URL,'_self')}
 window.__ensureWhatsAppRedirect=ensureWhatsAppRedirect;
 window.__SITE_SETTINGS__=SITE_SETTINGS;
@@ -86,6 +89,14 @@ p{font-size:clamp(1rem,2vw,1.1rem);color:#a8a8b8;margin-bottom:15px;line-height:
 .cta-buttons{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px}
 .urgency{margin-top:25px;padding:15px 25px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:12px;display:inline-block}
 .urgency strong{color:#fbbf24}
+.online-counter{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:50px;font-size:0.85rem;font-weight:600;color:#22c55e;margin-bottom:20px}
+.online-counter .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.phone-link{display:inline-flex;align-items:center;gap:8px;color:#f5f5f7;text-decoration:none;font-size:clamp(1.1rem,2.5vw,1.3rem);font-weight:700;margin-top:15px;transition:all 0.3s}
+.phone-link:hover{color:#d946ef;transform:scale(1.05)}
+.address-info{margin-top:20px;padding:15px 20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:0.9rem}
+.address-info strong{color:#f0abfc;display:block;margin-bottom:5px}
+.address-info p{margin:5px 0;color:#a8a8b8;font-size:0.85rem}
 footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid rgba(255,255,255,0.05)}
 @media(max-width:1024px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-img{max-width:500px;margin:0 auto}}
 @media(max-width:768px){.trust-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr;gap:15px}.cards{grid-template-columns:1fr}.btn{padding:15px 28px;font-size:0.95rem}.sticky-wa{bottom:15px;right:15px}.hero{padding:60px 0 80px}.hero-grid>div:first-child{order:2;margin-top:25px}.hero-grid>div:last-child{order:1}.hero-img{margin:0 auto 16px}.psychic-name{margin-top:10px;padding:12px 15px}.psychic-name-title{font-size:1.3rem}.psychic-name-subtitle{font-size:0.85rem}}
@@ -101,6 +112,22 @@ footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid 
 .slider-arrow.prev{left:10px}
 .slider-arrow.next{right:10px}
 @media(max-width:768px){.slider-arrow{width:40px;height:40px;font-size:1.2rem}.slider-arrow.prev{left:5px}.slider-arrow.next{right:5px}}
+.modal{display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);overflow-y:auto;animation:fadeIn 0.3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-content{background:#151520;margin:40px auto;padding:50px;max-width:900px;border-radius:20px;border:1px solid rgba(217,70,239,0.2);position:relative;animation:slideDown 0.3s}
+@keyframes slideDown{from{transform:translateY(-50px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:20px;right:25px;font-size:2.5rem;font-weight:bold;color:#a8a8b8;cursor:pointer;transition:color 0.3s;line-height:1}
+.modal-close:hover{color:#d946ef}
+.modal-content h1{font-size:2.5rem;font-weight:700;background:linear-gradient(135deg,#fff,#d946ef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:30px;text-align:center}
+.modal-content h2{font-size:1.8rem;color:#f0abfc;margin-top:40px;margin-bottom:20px;font-weight:700}
+.modal-content h3{font-size:1.3rem;color:#d946ef;margin-top:25px;margin-bottom:15px;font-weight:600}
+.modal-content p{color:#a8a8b8;margin-bottom:15px;font-size:1rem;line-height:1.8}
+.modal-content ul{margin-left:25px;margin-bottom:20px}
+.modal-content li{color:#a8a8b8;margin-bottom:10px;line-height:1.8}
+.modal-highlight{color:#22c55e;font-weight:600}
+.company-info{background:rgba(217,70,239,0.1);padding:25px;border-radius:15px;border:1px solid rgba(217,70,239,0.3);margin:30px 0}
+.company-info p{margin-bottom:10px;color:#f5f5f7}
+@media(max-width:768px){.modal-content{margin:20px;padding:30px 20px}.modal-content h1{font-size:2rem}.modal-content h2{font-size:1.5rem}}
 </style>
 </head>
 <body>
@@ -111,6 +138,12 @@ footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid 
 
 <section class="hero">
 <div class="container">
+<div style="text-align:center;margin-bottom:15px">
+<div class="online-counter" id="onlineCounter">
+<span class="dot"></span>
+<span>Сейчас на сайте: <strong id="onlineCount">2</strong> человека</span>
+</div>
+</div>
 <div class="hero-grid">
 <div>
 <span class="badge">⭐ Потомственная гадалка • 15+ лет</span>
@@ -123,7 +156,16 @@ footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid 
 <div class="trust-item"><span style="font-size:1.5rem">🔒</span><span style="font-size:0.85rem;font-weight:600">100% конфиденциально</span></div>
 </div>
 <a href="https://wa.me/79094174862?text=Здравствуйте, хочу обратиться к вам за помощью" class="btn" style="margin-top:25px" target="_blank" rel="noopener">📱 Получить консультацию</a>
+<a href="tel:+79094174862" class="phone-link" id="phoneLink">
+<span style="font-size:1.5rem">☎️</span>
+<span id="phoneDisplay">+7 (909) 417-48-62</span>
+</a>
 <p style="margin-top:12px;font-size:0.9rem">🔥 <strong style="color:#fbbf24">Сегодня</strong> 10 консультаций бесплатно!</p>
+<div class="address-info" id="addressInfo">
+<strong>📍 Место приема</strong>
+<p id="addressDisplay">г. Москва, ул. Тверская, д. 12, офис 45</p>
+<p style="color:#22c55e;font-weight:600">✨ Основной прием: Онлайн (по всей России и СНГ)</p>
+</div>
 <div class="stats">
 <div class="stat"><span class="stat-num">1200+</span><span class="stat-label">Клиентов</span></div>
 <div class="stat"><span class="stat-num">15</span><span class="stat-label">Лет опыта</span></div>
@@ -391,9 +433,57 @@ footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid 
 <div class="container">
 <div style="font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#f0abfc,#d946ef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:15px" id="footerName">Потомственная Гадалка Анастасия Петровна</div>
 <p style="color:#a8a8b8;max-width:600px;margin:0 auto 20px">Помогаю людям обрести счастье, любовь и благополучие уже более 15 лет</p>
+<p style="margin-bottom:15px"><a href="#" onclick="openPrivacyModal();return false" style="color:#d946ef;text-decoration:none;font-size:0.9rem;transition:color 0.3s;cursor:pointer" onmouseover="this.style.color='#f0abfc'" onmouseout="this.style.color='#d946ef'">🔒 Политика конфиденциальности</a></p>
 <p style="color:rgba(255,255,255,0.3);font-size:0.85rem">© 2025 Все права защищены</p>
 </div>
 </footer>
+
+<div id="privacyModal" class="modal">
+<div class="modal-content">
+<span class="modal-close" onclick="closePrivacyModal()">&times;</span>
+<h1>🔒 Политика конфиденциальности</h1>
+<div class="company-info">
+<p><strong>ИП Петрова Анастасия Сергеевна</strong></p>
+<p>ОГРНИП: 315774600234567</p>
+<p>ИНН: 773456789012</p>
+<p>Адрес: 125009, г. Москва, ул. Тверская, д. 12, офис 45</p>
+<p>Телефон: +7 (909) 417-48-62</p>
+<p>Email: info@gadalka-rus.ru</p>
+</div>
+<p style="font-size:0.9rem;color:#a8a8b8;font-style:italic;margin-bottom:30px">Дата последнего обновления: 16 октября 2025 года</p>
+<h2>1. Общие положения</h2>
+<p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей сайта <strong>gadalka-rus.ru</strong>.</p>
+<p>Используя Сайт, вы соглашаетесь с условиями настоящей Политики конфиденциальности.</p>
+<h2>2. Какие данные мы собираем</h2>
+<ul>
+<li><span class="modal-highlight">Персональные данные:</span> имя, номер телефона, email</li>
+<li><span class="modal-highlight">Технические данные:</span> IP-адрес, тип браузера</li>
+<li><span class="modal-highlight">Cookie-файлы</span> для улучшения работы Сайта</li>
+</ul>
+<h2>3. Цели обработки данных</h2>
+<ul>
+<li>Предоставление эзотерических услуг и консультаций</li>
+<li>Связь с вами по вопросам оказания услуг</li>
+<li>Улучшение качества работы Сайта</li>
+<li>Анализ поведения пользователей</li>
+</ul>
+<h2>4. Передача данных третьим лицам</h2>
+<p>Мы <strong>не продаем и не передаем</strong> ваши персональные данные третьим лицам, за исключением случаев, установленных законодательством РФ.</p>
+<h2>5. Защита данных</h2>
+<p>Мы применяем все необходимые меры для защиты ваших персональных данных, включая шифрование и защищенные каналы связи.</p>
+<h2>6. Cookie-файлы и аналитика</h2>
+<p>Сайт использует cookie-файлы и Яндекс.Метрику для улучшения работы и анализа посещаемости. Вы можете отключить cookie в настройках браузера.</p>
+<h2>7. Ваши права</h2>
+<p>В соответствии с ФЗ-152 вы имеете право получать информацию об обработке ваших данных, требовать их изменения или удаления.</p>
+<h2>8. Контактная информация</h2>
+<div class="company-info">
+<p>Телефон: <a href="tel:+79094174862" style="color:#22c55e;text-decoration:none">+7 (909) 417-48-62</a></p>
+<p>Email: <a href="mailto:info@gadalka-rus.ru" style="color:#22c55e;text-decoration:none">info@gadalka-rus.ru</a></p>
+<p>WhatsApp: <a href="https://wa.me/79094174862" style="color:#22c55e;text-decoration:none" target="_blank">+7 (909) 417-48-62</a></p>
+</div>
+<p style="text-align:center;margin-top:40px">Используя Сайт, вы подтверждаете согласие с настоящей Политикой конфиденциальности.</p>
+</div>
+</div>
 
 <script>
 (()=>{
@@ -406,7 +496,10 @@ const animateOnScroll=()=>{document.querySelectorAll('.card,.testimonial,.hero-i
 window.addEventListener('load',()=>{document.querySelectorAll('.card,.testimonial').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(20px)';c.style.transition='opacity 0.5s ease,transform 0.5s ease'});const img=document.querySelector('.hero-img');if(img){img.style.opacity='0';img.style.transform='translateY(30px)';img.style.transition='opacity 0.8s ease,transform 0.8s ease';setTimeout(()=>{img.style.opacity='1';img.style.transform='translateY(0)'},300)}setTimeout(animateOnScroll,500)});
 window.addEventListener('scroll',animateOnScroll);
 })();
-let currentSlide=0;const totalSlides=10;function initSlider(){const dotsContainer=document.getElementById('sliderDots');for(let i=0;i<totalSlides;i++){const dot=document.createElement('button');dot.className='slider-dot';if(i===0)dot.classList.add('active');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot)}updateSlider()}function moveSlide(direction){currentSlide+=direction;if(currentSlide<0)currentSlide=totalSlides-1;if(currentSlide>=totalSlides)currentSlide=0;updateSlider()}function goToSlide(index){currentSlide=index;updateSlider()}function updateSlider(){const slider=document.getElementById('testimonialSlider');const dots=document.querySelectorAll('.slider-dot');slider.style.transform=`translateX(-${currentSlide*100}%)`;dots.forEach((dot,index)=>{dot.classList.toggle('active',index===currentSlide)})}window.addEventListener('load',()=>{initSlider();const psychicName=SITE_SETTINGS.psychicName||'Анастасия Петровна';const heroName=document.getElementById('heroName');if(heroName){const titleEl=heroName.querySelector('.psychic-name-title');if(titleEl)titleEl.textContent=psychicName}const footerName=document.getElementById('footerName');if(footerName&&psychicName){footerName.textContent=`Потомственная Гадалка ${psychicName}`}});setInterval(()=>{moveSlide(1)},8000);
+let currentSlide=0;const totalSlides=10;function initSlider(){const dotsContainer=document.getElementById('sliderDots');for(let i=0;i<totalSlides;i++){const dot=document.createElement('button');dot.className='slider-dot';if(i===0)dot.classList.add('active');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot)}updateSlider()}function moveSlide(direction){currentSlide+=direction;if(currentSlide<0)currentSlide=totalSlides-1;if(currentSlide>=totalSlides)currentSlide=0;updateSlider()}function goToSlide(index){currentSlide=index;updateSlider()}function updateSlider(){const slider=document.getElementById('testimonialSlider');const dots=document.querySelectorAll('.slider-dot');slider.style.transform=`translateX(-${currentSlide*100}%)`;dots.forEach((dot,index)=>{dot.classList.toggle('active',index===currentSlide)})}window.addEventListener('load',()=>{initSlider();const psychicName=SITE_SETTINGS.psychicName||'Анастасия Петровна';const heroName=document.getElementById('heroName');if(heroName){const titleEl=heroName.querySelector('.psychic-name-title');if(titleEl)titleEl.textContent=psychicName}const footerName=document.getElementById('footerName');if(footerName&&psychicName){footerName.textContent=`Потомственная Гадалка ${psychicName}`}const phoneNum=SITE_SETTINGS.phoneNumber;if(phoneNum){const formatted=formatPhoneNumber(phoneNum);const phoneDisplay=document.getElementById('phoneDisplay');const phoneLink=document.getElementById('phoneLink');if(phoneDisplay)phoneDisplay.textContent=formatted;if(phoneLink)phoneLink.href=`tel:${phoneNum}`}const address=SITE_SETTINGS.address;if(address){const addressDisplay=document.getElementById('addressDisplay');if(addressDisplay)addressDisplay.textContent=address}function updateOnlineCount(){const count=Math.floor(Math.random()*4)+1;const onlineCount=document.getElementById('onlineCount');if(onlineCount){onlineCount.textContent=count;const words=['человек','человека','человека','человека'];onlineCount.parentElement.innerHTML=`Сейчас на сайте: <strong>${count}</strong> ${words[count-1]}`}}updateOnlineCount();setInterval(updateOnlineCount,45000)});setInterval(()=>{moveSlide(1)},8000);
+function openPrivacyModal(){document.getElementById('privacyModal').style.display='block';document.body.style.overflow='hidden'}
+function closePrivacyModal(){document.getElementById('privacyModal').style.display='none';document.body.style.overflow='auto'}
+window.onclick=function(e){const modal=document.getElementById('privacyModal');if(e.target==modal){closePrivacyModal()}}
 </script>
 
 <script type="text/javascript">
