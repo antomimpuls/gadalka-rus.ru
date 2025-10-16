@@ -54,7 +54,8 @@ p{font-size:clamp(1rem,2vw,1.1rem);color:#a8a8b8;margin-bottom:15px;line-height:
 .sticky-wa{position:fixed;bottom:20px;right:20px;z-index:999;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 .hero{padding:80px 0;background:linear-gradient(180deg,#0a0a0f,#151520);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-50%;left:-20%;right:-20%;height:150%;background:radial-gradient(circle,rgba(217,70,239,0.15),transparent 60%)}
+.hero::before{content:'';position:absolute;top:-50%;left:-20%;right:-20%;height:150%;background:radial-gradient(circle,rgba(217,70,239,0.15),transparent 60%);animation:shimmer 8s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:0.8;transform:scale(1.05)}}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:1}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(217,70,239,0.15);border:1px solid rgba(217,70,239,0.3);color:#f0abfc;border-radius:50px;font-size:0.85rem;font-weight:600;margin-bottom:20px;text-transform:uppercase}
 .trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:30px 0}
@@ -65,7 +66,30 @@ p{font-size:clamp(1rem,2vw,1.1rem);color:#a8a8b8;margin-bottom:15px;line-height:
 .stat-num{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;background:linear-gradient(135deg,#f0abfc,#d946ef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
 .stat-label{font-size:0.85rem;color:#a8a8b8}
 .hero-img{border-radius:20px;overflow:hidden;box-shadow:0 30px 60px rgba(217,70,239,0.3);position:relative}
-.hero-img img{width:100%;height:auto;display:block}
+.hero-img::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(217,70,239,0.2),transparent 70%);animation:pulse-glow 3s ease-in-out infinite;z-index:1;pointer-events:none}
+.hero-img::after{content:'';position:absolute;inset:-2px;background:conic-gradient(from 0deg,#d946ef,#a21caf,#f0abfc,#d946ef);border-radius:20px;z-index:-1;opacity:0.6;animation:rotate-border 8s linear infinite}
+@keyframes pulse-glow{0%,100%{opacity:0.3}50%{opacity:0.6}}
+@keyframes rotate-border{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.hero-img img{width:100%;height:auto;display:block;position:relative;z-index:2}
+.magic-particles{position:absolute;inset:0;pointer-events:none;z-index:3}
+.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:radial-gradient(circle,#fbbf24,transparent);opacity:0;animation:float-particle 6s ease-in-out infinite}
+.particle:nth-child(1){left:10%;top:20%;animation-delay:0s;background:radial-gradient(circle,#f0abfc,transparent)}
+.particle:nth-child(2){left:80%;top:30%;animation-delay:1s;background:radial-gradient(circle,#fbbf24,transparent)}
+.particle:nth-child(3){left:15%;top:70%;animation-delay:2s;background:radial-gradient(circle,#d946ef,transparent)}
+.particle:nth-child(4){left:85%;top:60%;animation-delay:3s;background:radial-gradient(circle,#f0abfc,transparent)}
+.particle:nth-child(5){left:50%;top:10%;animation-delay:1.5s;background:radial-gradient(circle,#fbbf24,transparent)}
+.particle:nth-child(6){left:40%;top:80%;animation-delay:2.5s;background:radial-gradient(circle,#d946ef,transparent)}
+.particle:nth-child(7){left:70%;top:15%;animation-delay:0.5s;background:radial-gradient(circle,#f0abfc,transparent)}
+.particle:nth-child(8){left:25%;top:45%;animation-delay:3.5s;background:radial-gradient(circle,#fbbf24,transparent)}
+@keyframes float-particle{0%,100%{transform:translateY(0) scale(0);opacity:0}10%{opacity:1;transform:translateY(-5px) scale(1)}50%{opacity:0.8;transform:translateY(-15px) scale(1.5)}90%{opacity:0.3}100%{transform:translateY(-30px) scale(0);opacity:0}}
+.stardust{position:absolute;bottom:0;left:0;right:0;height:100%;pointer-events:none;z-index:3;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;box-shadow:0 0 4px #f0abfc;animation:rise-star 8s linear infinite}
+.star:nth-child(1){left:20%;animation-delay:0s;animation-duration:7s}
+.star:nth-child(2){left:40%;animation-delay:2s;animation-duration:9s}
+.star:nth-child(3){left:60%;animation-delay:4s;animation-duration:8s}
+.star:nth-child(4){left:80%;animation-delay:1s;animation-duration:10s}
+.star:nth-child(5){left:30%;animation-delay:3s;animation-duration:7.5s}
+@keyframes rise-star{0%{bottom:-10px;opacity:0;transform:translateX(0)}20%{opacity:1}80%{opacity:0.5}100%{bottom:110%;opacity:0;transform:translateX(20px)}}
 .psychic-name{text-align:center;margin-top:20px;padding:15px 20px;background:linear-gradient(135deg,rgba(217,70,239,0.1),rgba(162,28,175,0.1));border:1px solid rgba(217,70,239,0.3);border-radius:15px;backdrop-filter:blur(10px)}
 .psychic-name-title{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:700;background:linear-gradient(135deg,#f0abfc,#d946ef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
 .psychic-name-subtitle{font-size:0.9rem;color:var(--text-muted);font-weight:500}
@@ -175,6 +199,23 @@ footer{background:#05050a;padding:40px 0;text-align:center;border-top:1px solid 
 <div>
 <div class="hero-img">
 <img src="https://raw.githubusercontent.com/antomimpuls/gadalka-rus.ru/main/Ms7rm4GGiJnKWnigXhf0gAS1zdUS7gnrVCJNXge2_45CIpvWK8Lm2QoCiSnJM9YhJ3mO8rl9LZ5FalkmqEICncKl.jpg" alt="Гадалка">
+<div class="magic-particles">
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+</div>
+<div class="stardust">
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+</div>
 </div>
 <div class="psychic-name" id="heroName">
 <div class="psychic-name-title">Анастасия Петровна</div>
