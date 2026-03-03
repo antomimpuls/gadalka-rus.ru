@@ -999,6 +999,9 @@ function handleIntentConfirm(){
     if (typeof ym === 'function' && YM_COUNTER && pendingMessengerGoal) {
         try { ym(YM_COUNTER, 'reachGoal', pendingMessengerGoal); } catch (err) {}
     }
+    if (typeof ym === 'function' && YM_COUNTER) {
+        try { ym(YM_COUNTER, 'reachGoal', 'all_messenger'); } catch (err) {}
+    }
     const target = pendingMessengerUrl;
     closeContactIntentModal();
     let opened = false;
