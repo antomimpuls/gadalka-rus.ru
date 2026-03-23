@@ -27,7 +27,8 @@ const SITE_SETTINGS = {
   'responseTime': '5-15 минут',
   'ogrnip': '324169700845231',
   'inn': '772814395601',
-  'psychicName': 'Элеонора'
+  'psychicName': 'Элеонора',
+  'metrikaMessengerVisible': false
 };
 (function(){
   var s = SITE_SETTINGS;
@@ -40,6 +41,95 @@ const SITE_SETTINGS = {
   function fmt(p){var n=p.replace(/\D/g,'');return n.length===11&&n[0]==='7'?'+7 ('+n.substr(1,3)+') '+n.substr(4,3)+'-'+n.substr(7,2)+'-'+n.substr(9,2):p;}
   window.FORMATTED_PHONE = fmt(s.phoneNumber);
 })();
+
+const SITE_STATS_TRACKER_CONFIG = {
+  projectUrl: 'https://koxvvmvuqaghugedhgyi.supabase.co',
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtveHZ2bXZ1cWFnaHVnZWRoZ3lpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMTI3NzQsImV4cCI6MjA4ODg4ODc3NH0.zgeaqJqADZyJmdeUG8CtZdL4biHL9PuDUXvbqGFyPJs',
+  domain: 'gadalka-rus.ru'
+};
+
+/* ADSPOWER_SITE_STATS_TRACKER_START */
+(function(){
+  const METRIKA_MESSENGER_VISIBLE = SITE_SETTINGS.metrikaMessengerVisible !== false;
+  const STORAGE_KEYS = {
+    visitor: 'adspower_site_stats_visitor',
+    session: 'adspower_site_stats_session'
+  };
+
+  function getStorageValue(key){
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) return raw;
+    } catch (err) {}
+    return null;
+  }
+
+  function setStorageValue(key, value){
+    try { localStorage.setItem(key, value); } catch (err) {}
+  }
+
+  function createId(){
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return window.crypto.randomUUID();
+    }
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+
+  function getVisitorKey(){
+    const cached = getStorageValue(STORAGE_KEYS.visitor);
+    if (cached) return cached;
+    const created = createId();
+    setStorageValue(STORAGE_KEYS.visitor, created);
+    return created;
+  }
+
+  function getSessionKey(){
+    const cacheKey = `${STORAGE_KEYS.session}:${new Date().toISOString().slice(0, 10)}`;
+    const cached = getStorageValue(cacheKey);
+    if (cached) return cached;
+    const created = createId();
+    setStorageValue(cacheKey, created);
+    return created;
+  }
+
+  async function track(payload){
+    const body = {
+      p_site_domain: SITE_STATS_TRACKER_CONFIG.domain,
+      p_channel: payload.channel,
+      p_event_token: payload.eventToken || createId(),
+      p_module_name: payload.moduleName || null,
+      p_button_label: payload.buttonLabel || null,
+      p_page_url: location.href,
+      p_page_path: location.pathname + location.search + location.hash,
+      p_referrer: document.referrer || null,
+      p_session_id: getSessionKey(),
+      p_visitor_key: getVisitorKey(),
+      p_client_created_at: new Date().toISOString(),
+      p_user_agent: navigator.userAgent || null,
+      p_metadata: {
+        title: document.title || null
+      }
+    };
+    const headers = {
+      'Content-Type': 'application/json',
+      'apikey': SITE_STATS_TRACKER_CONFIG.anonKey,
+      'Authorization': `Bearer ${SITE_STATS_TRACKER_CONFIG.anonKey}`
+    };
+    try {
+      await fetch(`${SITE_STATS_TRACKER_CONFIG.projectUrl}/rest/v1/rpc/record_site_click`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+        keepalive: true,
+        mode: 'cors'
+      });
+    } catch (err) {}
+  }
+
+  window.__siteStatsTracker = { track };
+  window.__METRIKA_MESSENGER_VISIBLE__ = METRIKA_MESSENGER_VISIBLE;
+})();
+/* ADSPOWER_SITE_STATS_TRACKER_END */
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -192,8 +282,8 @@ footer p{font-size:0.82rem;color:#4b5563;margin-bottom:4px}
 
 <!-- STICKY КНОПКИ -->
 <div class="sticky-messengers">
-<a href="https://wa.me/79592543085?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." class="btn btn-wa" id="stickyWa" target="_blank" rel="noopener">💬 WhatsApp</a>
-<a href="https://t.me/Evelina333?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." class="btn btn-tg" id="stickyTg" target="_blank" rel="noopener">✈ Telegram</a>
+<a class="btn btn-wa" data-messenger="wa" id="stickyWa" role="button" tabindex="0">💬 WhatsApp</a>
+<a class="btn btn-tg" data-messenger="tg" id="stickyTg" role="button" tabindex="0">✈ Telegram</a>
 </div>
 
 <!-- HERO -->
@@ -211,8 +301,8 @@ footer p{font-size:0.82rem;color:#4b5563;margin-bottom:4px}
         <div class="trust-item">🤫 Полная конфиденциальность</div>
       </div>
       <div class="cta-row">
-        <a href="https://wa.me/79592543085?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." class="btn btn-wa" id="heroWa" target="_blank" rel="noopener">📱 Написать в WhatsApp</a>
-        <a href="https://t.me/Evelina333?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." class="btn btn-tg" id="heroTg" target="_blank" rel="noopener">✈ Связаться в Telegram</a>
+        <a class="btn btn-wa" data-messenger="wa" id="heroWa" role="button" tabindex="0">📱 Написать в WhatsApp</a>
+        <a class="btn btn-tg" data-messenger="tg" id="heroTg" role="button" tabindex="0">✈ Связаться в Telegram</a>
       </div>
       <p class="hero-note">Консультация носит информационно-аналитический характер и не гарантирует конкретного жизненного исхода. Не заменяет медицинскую, юридическую или психологическую помощь.</p>
       <a href="tel:+79592543085" class="phone-link" id="phoneLink">📲 <span id="phoneDisplay">+7 (959) 254-30-85</span></a>
@@ -456,8 +546,8 @@ footer p{font-size:0.82rem;color:#4b5563;margin-bottom:4px}
   <h2>Запишитесь на консультацию</h2>
   <p style="color:#d1d5db;font-size:1.05rem;margin-bottom:0">Напишите в WhatsApp или Telegram — проведу диагностику по фото, сделаю расклад и дам конкретные рекомендации.</p>
   <div class="cta-buttons">
-    <a href="https://wa.me/79592543085?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." class="btn btn-wa" id="ctaWa" target="_blank" rel="noopener">💬 Написать в WhatsApp</a>
-    <a href="https://t.me/Evelina333?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." class="btn btn-tg" id="ctaTg" target="_blank" rel="noopener">✈ Перейти в Telegram</a>
+    <a class="btn btn-wa" data-messenger="wa" id="ctaWa" role="button" tabindex="0">💬 Написать в WhatsApp</a>
+    <a class="btn btn-tg" data-messenger="tg" id="ctaTg" role="button" tabindex="0">✈ Перейти в Telegram</a>
   </div>
   <p style="margin-top:14px;color:#6b7280;font-size:0.85rem">🕑 Среднее время ответа — 5–15 минут • Работаю круглосуточно</p>
 </div>
@@ -473,8 +563,8 @@ footer p{font-size:0.82rem;color:#4b5563;margin-bottom:4px}
     <h3>Контакты</h3>
     <ul class="contact-list">
       <li>Телефон: <a href="tel:+79592543085" id="contactPhone">+7 (959) 254-30-85</a></li>
-      <li>WhatsApp: <a href="https://wa.me/79592543085" id="contactWa" target="_blank" rel="noopener">Открыть чат</a></li>
-      <li>Telegram: <a href="https://t.me/Evelina333" id="contactTg" target="_blank" rel="noopener">Открыть чат</a></li>
+      <li>WhatsApp: <a data-messenger="wa" id="contactWa" role="button" tabindex="0">Открыть чат</a></li>
+      <li>Telegram: <a data-messenger="tg" id="contactTg" role="button" tabindex="0">Открыть чат</a></li>
       <li>Email: <a href="mailto:help@gadalka-rus.ru" id="contactEmail">help@gadalka-rus.ru</a></li>
       <li>Адрес: <span id="contactAddress">г. Москва, ул. Тверская, д. 12, офис 45</span></li>
       <li>Часы работы: <span>круглосуточно</span></li>
@@ -534,35 +624,90 @@ const s = SITE_SETTINGS;
 const YM  = window.YM_ID;
 const WA  = window.WA_URL;
 const TG  = window.TG_URL;
+const MESSENGER_VISIBLE = window.__METRIKA_MESSENGER_VISIBLE__ !== false;
+
+function prepareMessengerLink(el, targetUrl){
+  if(!el) return;
+  if(MESSENGER_VISIBLE && targetUrl){
+    el.href = targetUrl;
+    el.target = '_blank';
+    el.rel = 'noopener';
+    el.removeAttribute('role');
+    el.removeAttribute('tabindex');
+  } else {
+    el.removeAttribute('href');
+    el.removeAttribute('target');
+    el.removeAttribute('rel');
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+  }
+}
+
+function trackMessenger(channel, buttonLabel){
+  if(typeof ym==='function' && YM && MESSENGER_VISIBLE){
+    try{ ym(YM,'reachGoal','all_messenger'); }catch(e){}
+  }
+  if(window.__siteStatsTracker && typeof window.__siteStatsTracker.track === 'function'){
+    Promise.resolve(window.__siteStatsTracker.track({
+      channel: channel,
+      moduleName: 'direct-click',
+      buttonLabel: buttonLabel
+    })).catch(function(){});
+  }
+}
+
+function openMessengerDirect(targetUrl){
+  if(!targetUrl) return;
+  var opened = false;
+  try {
+    var win = window.open(targetUrl,'_blank');
+    opened = !!win;
+  } catch(err){}
+  if(!opened){
+    try { window.location.href = targetUrl; } catch(err){}
+  }
+}
+
+function bindMessengerTargets(ids, targetUrl, channel, buttonLabel){
+  ids.forEach(id=>{
+    var el = document.getElementById(id);
+    if(!el) return;
+    prepareMessengerLink(el, targetUrl);
+    el.addEventListener('click',function(evt){
+      trackMessenger(channel, buttonLabel);
+      if(!MESSENGER_VISIBLE){
+        evt.preventDefault();
+        evt.stopPropagation();
+        openMessengerDirect(targetUrl);
+      }
+    });
+    if(!MESSENGER_VISIBLE){
+      el.addEventListener('keydown',function(evt){
+        if(evt.key==='Enter' || evt.key===' '){
+          evt.preventDefault();
+          openMessengerDirect(targetUrl);
+        }
+      });
+    }
+  });
+}
 
 // Подставляем данные из настроек в контакты на странице
 document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('heroName').textContent = s.consultantName;
 
 // Обновляем href кнопок из настроек (на случай изменения номера/ника)
-['heroWa','stickyWa','ctaWa','contactWa'].forEach(id=>{
-  var el = document.getElementById(id);
-  if(el && WA) el.href = WA;
-});
+bindMessengerTargets(['heroWa','stickyWa','ctaWa','contactWa'], WA, 'whatsapp', 'whatsapp');
+bindMessengerTargets(['heroTg','stickyTg','ctaTg','contactTg'], TG, 'telegram', 'telegram');
 ['heroTg','stickyTg','ctaTg','contactTg'].forEach(id=>{
   var el = document.getElementById(id);
-  if(el && TG) el.href = TG;
-  else if(el && !TG) el.style.display = 'none';
+  if(el && !TG) el.style.display = 'none';
 });
 
 // Скрываем sticky Telegram если отключён
 if(!s.telegramEnabled || !TG){
   document.querySelectorAll('.btn-tg').forEach(b=>b.style.display='none');
 }
-
-// Отслеживание кликов через Метрику
-document.querySelectorAll('.btn-wa,.btn-tg').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    if(typeof ym==='function' && YM){
-      try{ ym(YM,'reachGoal','all_messenger'); }catch(e){}
-    }
-  });
-});
 
 // Плавный скролл
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -629,3 +774,4 @@ ym(SITE_SETTINGS.yandexMetrikaId,"init",{clickmap:true,trackLinks:true,accurateT
 
 </body>
 </html>
+
